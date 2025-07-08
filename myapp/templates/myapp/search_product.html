@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Resultados de Búsqueda{% endblock %}
+
+{% block content %}
+  <h2>Resultados para: "{{ query }}"</h2>
+
+  {% if products %}
+    <ul class="list-group">
+      {% for product in products %}
+        <li class="list-group-item">
+          <a href="{% url 'detalle_producto' product.id %}">
+            {{ product.name }} — ${{ product.price }}
+          </a><br />
+          <small class="text-muted">{{ product.description }}</small>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="text-muted">No se encontraron productos con ese nombre.</p>
+  {% endif %}
+
+  <a href="{% url 'productos' %}" class="btn btn-secondary mt-4">← Volver a Productos</a>
+{% endblock %}

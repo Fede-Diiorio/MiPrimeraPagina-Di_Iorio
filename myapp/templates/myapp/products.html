@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Productos{% endblock %}
+
+{% block content %}
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h2 class="card-title mb-4">Lista de Productos</h2>
+
+      <form action="{% url 'buscar_producto' %}" method="get" class="d-flex mb-3">
+        <input type="text" name="name" placeholder="Buscar producto..." class="form-control me-2" value="{{ query|default:'' }}">
+        <button type="submit" class="btn btn-outline-primary">Buscar</button>
+      </form>
+
+      {% if products %}
+        <ul class="list-group">
+          {% for product in products %}
+            <li class="list-group-item">
+              <a href="{% url 'detalle_producto' product.id %}">
+                {{ product.name }} — ${{ product.price }}
+              </a><br />
+              <small class="text-muted">{{ product.description }}</small>
+            </li>
+          {% endfor %}
+
+        </ul>
+      {% else %}
+        <p class="text-muted">No hay productos disponibles.</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <a href="{% url 'crear_producto' %}" class="btn btn-success mt-4">+ Nuevo producto</a>
+
+  <a href="{% url 'home' %}" class="btn btn-secondary mt-4">← Volver al inicio</a>
+{% endblock %}

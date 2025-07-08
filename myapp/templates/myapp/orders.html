@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Órdenes{% endblock %}
+
+{% block content %}
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h2 class="card-title mb-4">Lista de Órdenes</h2>
+
+      <form action="{% url 'buscar_ordenes' %}" method="get" class="d-flex mb-3">
+        <input type="text" name="name" placeholder="Buscar orden por cliente..." class="form-control me-2" value="{{ query|default:'' }}">
+        <button type="submit" class="btn btn-outline-primary">Buscar</button>
+      </form>
+
+
+      {% if orders %}
+        <ul class="list-group">
+          {% for order in orders %}
+            <li class="list-group-item">
+              {{ order }}<br />
+              <small class="text-muted">Fecha: {{ order.created_at }}</small>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="text-muted">No hay órdenes registradas.</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <a href="{% url 'crear_orden' %}" class="btn btn-success mt-4">+ Nueva orden</a>
+
+  <a href="{% url 'home' %}" class="btn btn-secondary mt-4">← Volver al inicio</a>
+{% endblock %}
