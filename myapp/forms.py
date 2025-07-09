@@ -1,52 +1,26 @@
 from django import forms
-from .models import Client, Product
+from .models import Product, Category
 
 
-class ProductForm(forms.Form):
-    name = forms.CharField(
-        max_length=100,
-        label="Nombre del producto",
-        required=True,
-        widget=forms.TextInput(attrs={"class": "form-control"}),
-    )
-    price = forms.FloatField(
-        required=True,
-        min_value=0.01,
-        widget=forms.NumberInput(attrs={"class": "form-control"}),
-    )
-    description = forms.CharField(
-        widget=forms.Textarea(attrs={"class": "form-control", "rows": 4}),
-        required=True,
-        label="Descripción",
-    )
+class CategoryForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = ["name", "slug"]
+        widgets = {
+            "name": forms.TextInput(attrs={"class": "form-control"}),
+            "slug": forms.TextInput(attrs={"class": "form-control"}),
+        }
 
 
-class ClientForm(forms.Form):
-    name = forms.CharField(
-        max_length=30,
-        label="Nombre",
-        widget=forms.TextInput(attrs={"class": "form-control"}),
-    )
-    lastname = forms.CharField(
-        max_length=50,
-        required=False,
-        label="Apellido",
-        widget=forms.TextInput(attrs={"class": "form-control"}),
-    )
-    email = forms.EmailField(
-        label="Correo electrónico",
-        widget=forms.EmailInput(attrs={"class": "form-control"}),
-    )
-
-
-class OrderForm(forms.Form):
-    client = forms.ModelChoiceField(
-        queryset=Client.objects.all(),
-        label="Cliente",
-        widget=forms.Select(attrs={"class": "form-select"}),
-    )
-    products = forms.ModelMultipleChoiceField(
-        queryset=Product.objects.all(),
-        label="Productos",
-        widget=forms.SelectMultiple(attrs={"class": "form-select"}),
-    )
+class ProductForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ["name", "price", "description", "image", "stock", "category"]
+        widgets = {
+            "name": forms.TextInput(attrs={"class": "form-control"}),
+            "price": forms.NumberInput(attrs={"class": "form-control", "step": "0.01"}),
+            "description": forms.Textarea(attrs={"class": "form-control", "rows": 3}),
+            "image": forms.URLInput(attrs={"class": "form-control"}),
+            "stock": forms.NumberInput(attrs={"class": "form-control", "min": 0}),
+            "category": forms.Select(attrs={"class": "form-select"}),
+        }
