@@ -5,6 +5,7 @@ from .views import (
     product_create,
     category_list,
     category_create,
+    products_by_category,
 )
 
 urlpatterns = [
@@ -13,4 +14,9 @@ urlpatterns = [
     path("productos/crear/", product_create, name="product_create"),
     path("categorias/", category_list, name="category_list"),
     path("categorias/crear/", category_create, name="category_create"),
+    path(
+        "productos/categoria/<slug:slug>/",
+        products_by_category,
+        name="products_by_category",
+    ),
 ]

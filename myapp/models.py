@@ -6,6 +6,7 @@ from django.db import models
 class Category(models.Model):
     name = models.CharField(max_length=40)
     slug = models.SlugField(max_length=40, unique=True)
+    image = models.TextField(default="Sin-Imagen", help_text="URL de la imagen")
 
     def __str__(self):
         return self.name

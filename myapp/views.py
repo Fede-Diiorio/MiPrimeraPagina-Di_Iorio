@@ -1,10 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Product, Category
 from .forms import ProductForm, CategoryForm
 
 
 def home_view(request):
-    return render(request, "base.html")
+    return render(request, "myapp/home.html")
 
 
 # Listar productos
@@ -29,6 +29,16 @@ def product_create(request):
 def category_list(request):
     categories = Category.objects.all()
     return render(request, "myapp/categories.html", {"categories": categories})
+
+
+def products_by_category(request, slug):
+    category = get_object_or_404(Category, slug=slug)
+    products = Product.objects.filter(category=category)
+    return render(
+        request,
+        "myapp/products_by_category.html",
+        {"category": category, "products": products},
+    )
 
 
 # Crear categoría
