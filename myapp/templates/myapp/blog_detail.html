@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %} | {{ blog.title }}{% endblock %}
+
+{% block content %}
+  <div class="container mt-5">
+    <h2>{{ blog.title }}</h2>
+    <hr>
+    <p>{{ blog.text|linebreaks }}</p>
+
+    <a href="#" onclick="history.back()" class="btn btn-secondary mt-3">Volver</a>
+  </div>
+{% endblock %}

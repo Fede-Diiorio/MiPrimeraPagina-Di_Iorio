@@ -1,11 +1,14 @@
 from django.urls import path
 from .views import (
+    create_blog,
     home_view,
     product_list,
     product_create,
     category_list,
     category_create,
     products_by_category,
+    blog_list,
+    blog_detail,
 )
 
 urlpatterns = [
@@ -19,4 +22,7 @@ urlpatterns = [
         products_by_category,
         name="products_by_category",
     ),
+    path("blog/", blog_list, name="blog_list"),
+    path("blog/crear/", create_blog, name="blog_create"),
+    path("blog/<int:blog_id>/", blog_detail, name="blog_detail"),
 ]

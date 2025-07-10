@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Product, Category
-from .forms import ProductForm, CategoryForm
+from .models import Product, Category, Blog
+from .forms import ProductForm, CategoryForm, BlogForm
 
 
 def home_view(request):
@@ -51,3 +51,25 @@ def category_create(request):
     else:
         form = CategoryForm()
     return render(request, "myapp/category_form.html", {"form": form})
+
+
+def blog_list(request):
+    blogs = Blog.objects.all()
+    return render(request, "myapp/blog.html", {"blogs": blogs})
+
+
+def create_blog(request):
+    if request.method == "POST":
+        form = BlogForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("blog_list")
+    else:
+        form = BlogForm()
+
+    return render(request, "myapp/blog_form.html", {"form": form})
+
+
+def blog_detail(request, blog_id):
+    blog = get_object_or_404(Blog, id=blog_id)
+    return render(request, "myapp/blog_detail.html", {"blog": blog})

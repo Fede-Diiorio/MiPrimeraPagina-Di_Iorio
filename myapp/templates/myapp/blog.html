@@ -1,0 +1,20 @@
+{% extends "base.html" %} 
+{% block title %} | Blog{% endblock %} 
+
+{% block content%}
+<h2>Entradas de blog</h2>
+
+<ul class="list-group">
+  {% for blog in blogs%}
+    <li class="list-group-item">
+        <a href="{% url 'blog_detail' blog.id %}">{{ blog.title }}</a>
+    </li>
+
+  {% empty %}
+    <li class="list-group-item">No hay entradas del blog creadas.</li>
+  {% endfor %}
+</ul>
+
+<a href="{% url "home_view" %}" class="btn btn-secondary mt-3">Volver</a>
+
+{% endblock %}
