@@ -1,0 +1,28 @@
+.background-image {
+  position: relative;
+  background-image: url("https://images5.alphacoders.com/810/thumb-1920-810189.png");
+  height: 20rem;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+  .background-image::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1; }
+  .background-image .text-center {
+    position: relative;
+    z-index: 2;
+    color: white; }
+
+.card-img-top {
+  max-height: 12rem; }
+
+/*# sourceMappingURL=home.css.map */

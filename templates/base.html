@@ -1,10 +1,14 @@
+{% load sass_tags static %}
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    {% load static %}
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>WH40K Store{% block title %}{% endblock %}</title>
+    {% block extra_css %}
+      <link rel="stylesheet" href="{% sass_src 'css/styles.scss' %}">
+    {% endblock %}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
@@ -29,8 +33,6 @@
             {% endfor %}
           </ul>
         </li>
-        {% comment %} <li class="nav-item"><a class="nav-link" href="{% url 'product_create' %}">Crear Producto</a></li> {% endcomment %}
-        {% comment %} <li class="nav-item"><a class="nav-link" href="{% url 'category_create' %}">Crear Categoría</a></li> {% endcomment %}
       </ul>
     </div>
   </div>
