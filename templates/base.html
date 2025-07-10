@@ -36,6 +36,20 @@
         <li class="nav-item"><a class="nav-link" href="{% url 'blog_list' %}">Blogs</a></li>
       </ul>
     </div>
+    
+    {% if user.is_authenticated %}
+      <div class="d-flex align-items-center ms-auto">
+        <span class="navbar-text text-white me-3">Hola, {{ user.username }}</span>
+        <form action="{% url 'logout' %}" method="post" class="mb-0">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-outline-light btn-sm">Salir</button>
+        </form>
+      </div>
+    {% else %}
+      <a href="{% url 'login' %}" class="btn btn-outline-light btn-sm me-2">Ingresar</a>
+      <a href="{% url 'register' %}" class="btn btn-outline-light btn-sm">Registrarme</a>
+    {% endif %}
+
   </div>
 </nav>
 

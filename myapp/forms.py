@@ -1,5 +1,6 @@
 from django import forms
-from .models import Product, Category, Blog
+from django.contrib.auth.forms import UserCreationForm
+from .models import Product, Category, Blog, CustomUser
 
 
 class CategoryForm(forms.ModelForm):
@@ -41,3 +42,9 @@ class BlogForm(forms.ModelForm):
                 }
             ),
         }
+
+
+class CustomUserCreationForm(UserCreationForm):
+    class Meta:
+        model = CustomUser
+        fields = ["username", "email", "password1", "password2"]

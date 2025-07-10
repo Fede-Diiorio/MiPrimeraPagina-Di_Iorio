@@ -1,9 +1,7 @@
 from django.contrib import admin
-
-# Register your models here.
-
-from .models import Product, Category, Blog
+from django.contrib.auth.admin import UserAdmin
+from .models import Product, Category, Blog, CustomUser
 
 register_models = [Product, Category, Blog]
 
-admin.site.register(register_models)
+admin.site.register(CustomUser, UserAdmin)
