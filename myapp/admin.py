@@ -1,7 +1,6 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
-from .models import Product, Category, Blog, CustomUser
+from .models import Product, Category, Blog
 
-register_models = [Product, Category, Blog]
-
-admin.site.register(CustomUser, UserAdmin)
+admin.site.register(Product)
+admin.site.register(Category)
+admin.site.register(Blog)

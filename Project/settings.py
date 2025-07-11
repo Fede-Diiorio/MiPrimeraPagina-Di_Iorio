@@ -1,5 +1,7 @@
 import os
 
+import accounts
+
 """
 Django settings for Project project.
 
@@ -41,6 +43,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "myapp",
     "sass_processor",
+    "accounts",
 ]
 
 MIDDLEWARE = [
@@ -73,7 +76,7 @@ TEMPLATES = [  # type: ignore
 
 WSGI_APPLICATION = "Project.wsgi.application"
 
-AUTH_USER_MODEL = "myapp.CustomUser"
+AUTH_USER_MODEL = "accounts.CustomUser"
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases

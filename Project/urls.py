@@ -23,4 +23,5 @@ from django.urls import path, include
 urlpatterns: list[Union[URLPattern, URLResolver]] = [
     path("admin/", admin.site.urls),
     path("", include("myapp.urls")),
+    path("accounts/", include("accounts.urls")),
 ]
