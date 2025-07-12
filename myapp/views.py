@@ -1,6 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Product, Category, Blog
 from .forms import ProductForm, CategoryForm, BlogForm
+from django.contrib.auth.decorators import user_passes_test
+
+
+def admin_required(view_func):
+    decorated_view_func = user_passes_test(lambda user: user.is_superuser)(view_func)
+    return decorated_view_func
 
 
 def home_view(request):
@@ -14,6 +20,7 @@ def product_list(request):
 
 
 # Crear producto
+@admin_required
 def product_create(request):
     if request.method == "POST":
         form = ProductForm(request.POST)
@@ -42,6 +49,7 @@ def products_by_category(request, slug):
 
 
 # Crear categoría
+@admin_required
 def category_create(request):
     if request.method == "POST":
         form = CategoryForm(request.POST)
@@ -58,6 +66,7 @@ def blog_list(request):
     return render(request, "myapp/blog.html", {"blogs": blogs})
 
 
+@admin_required
 def create_blog(request):
     if request.method == "POST":
         form = BlogForm(request.POST)

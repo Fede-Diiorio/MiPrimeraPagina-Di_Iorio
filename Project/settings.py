@@ -1,6 +1,5 @@
 import os
 
-import accounts
 
 """
 Django settings for Project project.

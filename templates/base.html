@@ -34,6 +34,23 @@
           </ul>
         </li>
         <li class="nav-item"><a class="nav-link" href="{% url 'blog_list' %}">Blogs</a></li>
+        
+        {% if user.is_authenticated %}
+          {% if user.is_staff or user.is_superuser %}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="createDropdown" role="button"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                Crear
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="createDropdown">
+                <li><a class="dropdown-item" href="{% url 'product_create' %}">Nuevo producto</a></li>
+                <li><a class="dropdown-item" href="{% url 'category_create' %}">Nueva categoría</a></li>
+                <li><a class="dropdown-item" href="{% url 'blog_create' %}">Nuevo blog</a></li>
+              </ul>
+            </li>
+          {% endif %}
+        {% endif %}
+
       </ul>
     </div>
     
