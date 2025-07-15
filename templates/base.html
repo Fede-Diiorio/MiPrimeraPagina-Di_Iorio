@@ -1,4 +1,6 @@
 {% load sass_tags static %}
+{% load static %}
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -55,12 +57,23 @@
     </div>
     
     {% if user.is_authenticated %}
-      <div class="d-flex align-items-center ms-auto">
+      <div class="d-flex align-items-center ms-auto gap-2">
+
+        {% if user.avatar %}
+          <img src="{{ user.avatar.url }}" alt="Avatar" class="rounded-circle" style="height: 40px;">
+        {% else %}
+          <span class="text-light">Sin avatar</span>
+        {% endif %}
+
         <span class="navbar-text text-white me-3">Hola, {{ user.username }}</span>
+
+        <a class="btn btn-outline-light btn-sm" href="{% url 'update_profile' %}">Editar</a>
+
         <form action="{% url 'logout' %}" method="post" class="mb-0">
           {% csrf_token %}
           <button type="submit" class="btn btn-outline-light btn-sm">Salir</button>
         </form>
+
       </div>
     {% else %}
       <a href="{% url 'login' %}" class="btn btn-outline-light btn-sm me-2">Ingresar</a>
