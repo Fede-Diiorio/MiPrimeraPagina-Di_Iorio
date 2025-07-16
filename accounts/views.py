@@ -1,29 +1,72 @@
-from django.contrib.auth.forms import UserChangeForm
-from django.contrib.auth.decorators import login_required
+# accounts/views.py
 from django.shortcuts import render, redirect
-from django.contrib.auth import login
-from .forms import CustomUserCreationForm, EditProfileForm
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from .forms import UserRegisterForm, UserLoginForm, UserUpdateForm, AvatarForm
+from .models import Avatar
 
 
 def register_view(request):
     if request.method == "POST":
-        form = CustomUserCreationForm(request.POST)
+        form = UserRegisterForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect("home")
+            form.save()
+            return redirect("login")
     else:
-        form = CustomUserCreationForm()
+        form = UserRegisterForm()
     return render(request, "accounts/register.html", {"form": form})
 
 
-@login_required  # con este decorador exigimos que el usuario esté logueado para utilizar esta view
-def update_profile(request):
+def login_view(request):
     if request.method == "POST":
-        form = EditProfileForm(request.POST, request.FILES, instance=request.user)
+        form = UserLoginForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect("home")
+            user = authenticate(
+                request,
+                username=form.cleaned_data["username"],
+                password=form.cleaned_data["password"],
+            )
+            if user:
+                login(request, user)
+                return redirect("home")
     else:
-        form = EditProfileForm(instance=request.user)
-    return render(request, "accounts/profile.html", {"form": form})
+        form = UserLoginForm()
+    return render(request, "accounts/login.html", {"form": form})
+
+
+@login_required  # type: ignore
+def logout_view(request):
+    if request.method == "POST":
+        logout(request)
+        return redirect("login")
+
+
+@login_required
+def update_profile(request):
+    user_form = UserUpdateForm(instance=request.user)
+    avatar_form = AvatarForm()
+
+    try:
+        avatar = request.user.avatar
+        avatar_form = AvatarForm(instance=avatar)
+    except Avatar.DoesNotExist:
+        pass
+
+    if request.method == "POST":
+        user_form = UserUpdateForm(request.POST, instance=request.user)
+        avatar_form = AvatarForm(
+            request.POST, request.FILES, instance=getattr(request.user, "avatar", None)
+        )
+
+        if user_form.is_valid() and avatar_form.is_valid():
+            user_form.save()
+            avatar = avatar_form.save(commit=False)
+            avatar.user = request.user
+            avatar.save()
+            return redirect("home")
+
+    return render(
+        request,
+        "accounts/update_profile.html",
+        {"user_form": user_form, "avatar_form": avatar_form},
+    )

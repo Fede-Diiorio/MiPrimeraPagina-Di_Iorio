@@ -1,6 +1,7 @@
 # myapp/models.py
 
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Category(models.Model):
@@ -12,23 +13,19 @@ class Category(models.Model):
         return self.name
 
 
-class Product(models.Model):
-    name = models.CharField(max_length=60)
-    price = models.FloatField()
-    description = models.TextField()
-    image = models.TextField(default="Sin-Imagen")
-    stock = models.PositiveIntegerField(default=0)
-    category = models.ForeignKey(
-        Category, on_delete=models.CASCADE, related_name="products"
-    )
-
-    def __str__(self):
-        return self.name
-
-
 class Blog(models.Model):
     title = models.CharField(max_length=70)
-    text = models.TextField()
+    body = models.TextField()
+    image = models.TextField(default="Sin-Imagen", help_text="URL de la imagen")
+    date = models.DateField(auto_now_add=True)
+    is_active = models.BooleanField(default=True)
 
     def __str__(self) -> str:
         return self.title
+
+
+class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="comments")
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE, related_name="comments")
+    text = models.TextField()
+    date = models.DateField(auto_now_add=True)

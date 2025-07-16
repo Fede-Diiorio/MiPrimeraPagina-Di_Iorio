@@ -1,28 +1,11 @@
 from django.urls import path
-from .views import (
-    create_blog,
-    home_view,
-    product_list,
-    product_create,
-    category_list,
-    category_create,
-    products_by_category,
-    blog_list,
-    blog_detail,
-)
+from . import views
 
 urlpatterns = [
-    path("", home_view, name="home"),
-    path("productos/", product_list, name="product_list"),
-    path("productos/crear/", product_create, name="product_create"),
-    path("categorias/", category_list, name="category_list"),
-    path("categorias/crear/", category_create, name="category_create"),
-    path(
-        "productos/categoria/<slug:slug>/",
-        products_by_category,
-        name="products_by_category",
-    ),
-    path("blog/", blog_list, name="blog_list"),
-    path("blog/crear/", create_blog, name="blog_create"),
-    path("blog/<int:blog_id>/", blog_detail, name="blog_detail"),
+    path("", views.home_view, name="home"),
+    path("blog/", views.blog_list, name="blog_list"),
+    path("blog/<int:blog_id>/", views.blog_detail, name="blog_detail"),
+    path("category/<slug:slug>/", views.blog_by_category, name="blog_by_category"),
+    path("blog/create/", views.blog_create, name="blog_create"),
+    path("blog/<int:blog_id>/comment/", views.add_comment, name="add_comment"),
 ]

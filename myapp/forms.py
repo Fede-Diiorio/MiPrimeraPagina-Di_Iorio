@@ -1,5 +1,5 @@
 from django import forms
-from .models import Product, Category, Blog
+from .models import Category, Blog, Comment
 
 
 class CategoryForm(forms.ModelForm):
@@ -12,32 +12,33 @@ class CategoryForm(forms.ModelForm):
         }
 
 
-class ProductForm(forms.ModelForm):
-    class Meta:
-        model = Product
-        fields = ["name", "price", "description", "image", "stock", "category"]
-        widgets = {
-            "name": forms.TextInput(attrs={"class": "form-control"}),
-            "price": forms.NumberInput(attrs={"class": "form-control", "step": "0.01"}),
-            "description": forms.Textarea(attrs={"class": "form-control", "rows": 3}),
-            "image": forms.URLInput(attrs={"class": "form-control"}),
-            "stock": forms.NumberInput(attrs={"class": "form-control", "min": 0}),
-            "category": forms.Select(attrs={"class": "form-select"}),
-        }
-
-
 class BlogForm(forms.ModelForm):
     class Meta:
         model = Blog
-        fields = ["title", "text"]
+        fields = ["title", "body", "image", "is_active"]
         widgets = {
-            "title": forms.TextInput(
-                attrs={"class": "form-control", "placeholder": "Título"}
-            ),
+            "title": forms.TextInput(attrs={"class": "form-control"}),
+            "body": forms.Textarea(attrs={"class": "form-control"}),
+            "image": forms.TextInput(attrs={"class": "form-control"}),
+            "is_active": forms.CheckboxInput(attrs={"class": "form-check-input"}),
+        }
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = [
+            "text"
+        ]  # Solo el texto del comentario, el user y blog se asignan en la vista
+        widgets = {
             "text": forms.Textarea(
                 attrs={
                     "class": "form-control",
-                    "placeholder": "Escribí el contenido...",
+                    "rows": 4,
+                    "placeholder": "Escribe tu comentario aquí...",
                 }
             ),
+        }
+        labels = {
+            "text": "Comentario",
         }
