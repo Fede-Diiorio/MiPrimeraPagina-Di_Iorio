@@ -7,7 +7,7 @@
 <ul class="list-group">
   {% for blog in blogs%}
     <li class="list-group-item">
-        <a href="{% url 'blog_detail' blog.id %}">{{ blog.title }}</a>
+        <a href="{% url 'blog_detail' blog.id %}">{{ blog.title }} - {{blog.user.username}}</a>
     </li>
 
   {% empty %}

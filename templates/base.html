@@ -36,6 +36,7 @@
         <li class="nav-item"><a class="nav-link" href="{% url 'blog_list' %}">Blogs</a></li>
         
         {% if user.is_authenticated %}
+        <li class="nav-item"><a class="nav-link" href="{% url 'blogs_by_user' user.username %}">Mis blogs</a></li>
           {% if user.is_staff or user.is_superuser %}
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="createDropdown" role="button"

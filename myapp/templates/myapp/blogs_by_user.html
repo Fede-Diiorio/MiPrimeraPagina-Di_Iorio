@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Mis blogs</h2>
+
+{% if blogs %}
+  <ul>
+    {% for blog in blogs %}
+      <li>
+        <a href="{% url 'blog_detail' blog.id %}">{{ blog.title }}</a> - {{ blog.date }}
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>No has creado ningún blog aún.</p>
+{% endif %}
+
+{% endblock %}

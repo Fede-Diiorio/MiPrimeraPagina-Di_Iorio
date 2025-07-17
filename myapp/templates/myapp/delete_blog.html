@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>¿Seguro que querés eliminar "{{ blog.title }}"?</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="d-flex gap-2">
+            <button class="btn btn-danger mt-3" type="submit">Sí, eliminar</button>
+            <a class="btn btn-secondary mt-3" href="#" onclick="history.back()">Cancelar</a>
+        </div>
+    </form>
+{% endblock content %}
+

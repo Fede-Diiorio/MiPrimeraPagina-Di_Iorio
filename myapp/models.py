@@ -14,6 +14,7 @@ class Category(models.Model):
 
 
 class Blog(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="blogs")
     title = models.CharField(max_length=70)
     body = models.TextField()
     image = models.TextField(default="Sin-Imagen", help_text="URL de la imagen")
@@ -24,7 +25,7 @@ class Blog(models.Model):
     )
 
     def __str__(self) -> str:
-        return self.title
+        return f"{self.title} - {self.user.username}"
 
 
 class Comment(models.Model):

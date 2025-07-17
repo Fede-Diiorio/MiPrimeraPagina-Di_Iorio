@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Editar blog</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="d-flex gap-2">
+            <button class="btn btn-primary mt-3" type="submit">Guardar cambios</button>
+            <a href="#" onclick="history.back()" class="btn btn-secondary mt-3">Volver</a>
+        </div>
+    </form>
+{% endblock  %}

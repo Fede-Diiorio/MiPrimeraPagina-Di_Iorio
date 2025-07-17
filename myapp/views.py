@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Category, Blog
 from .forms import CategoryForm, BlogForm, CommentForm
 from django.contrib.auth.decorators import user_passes_test, login_required
+from django.contrib.auth.models import User
 
 
 def admin_required(view_func):
@@ -29,6 +30,28 @@ def category_create(request):
     else:
         form = CategoryForm()
     return render(request, "myapp/category_form.html", {"form": form})
+
+
+@admin_required
+def edit_category(request, category_id):
+    category = get_object_or_404(Category, pk=category_id)
+    if request.method == "POST":
+        form = CategoryForm(request.POST, instance=category)
+        if form.is_valid():
+            form.save()
+            return redirect("category_list")
+    else:
+        form = CategoryForm(instance=category)
+    return render(request, "myapp/edit_category.html", {"form": form})
+
+
+@admin_required
+def delete_category(request, category_id):
+    category = get_object_or_404(Category, pk=category_id)
+    if request.method == "POST":
+        category.delete()
+        return redirect("category_list")
+    return render(request, "myapp/delete_category.html", {"category": category})
 
 
 # <--- BLOGS --->
@@ -74,16 +97,54 @@ def blog_by_category(request, slug):
     )
 
 
+@login_required
+def blogs_by_user(request, username):
+    user = get_object_or_404(User, username=username)
+    blogs = Blog.objects.filter(user=user).order_by("-date")
+    return render(
+        request,
+        "myapp/blogs_by_user.html",
+        {
+            "blogs": blogs,
+            "blog_owner": user,
+        },
+    )
+
+
 @admin_required
 def blog_create(request):
     if request.method == "POST":
         form = BlogForm(request.POST)
         if form.is_valid():
-            form.save()
+            blog = form.save(commit=False)
+            blog.user = request.user
+            blog.save()
             return redirect("blog_list")
     else:
         form = BlogForm()
     return render(request, "myapp/blog_form.html", {"form": form})
+
+
+@admin_required
+def edit_blog(request, blog_id):
+    blog = get_object_or_404(Blog, pk=blog_id)
+    if request.method == "POST":
+        form = BlogForm(request.POST, request.FILES, instance=blog)
+        if form.is_valid():
+            form.save()
+            return redirect("blog_detail", blog_id=blog.id)  # type: ignore
+    else:
+        form = BlogForm(instance=blog)
+    return render(request, "myapp/edit_blog.html", {"form": form})
+
+
+@admin_required
+def delete_blog(request, blog_id):
+    blog = get_object_or_404(Blog, pk=blog_id)
+    if request.method == "POST":
+        blog.delete()
+        return redirect("blog_list")
+    return render(request, "myapp/delete_blog.html", {"blog": blog})
 
 
 # <--- COMENTARIOS --->
