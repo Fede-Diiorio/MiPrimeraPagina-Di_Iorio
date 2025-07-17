@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %} | {{ category.name }}{% endblock %}
+
+{% block content %}
+  <h2 class="mb-4">Entradas en la categoría: {{ category.name }}</h2>
+
+  {% if blogs %}
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+      {% for blog in blogs %}
+        <div class="col">
+          <div class="card h-100 shadow-sm border-0">
+            <div class="card-body">
+              <h5 class="card-title">{{ blog.title }}</h5>
+              <p class="card-text text-muted">{{ blog.created_at|date:"d M Y" }}</p>
+              <p class="card-text">{{ blog.excerpt|truncatewords:20 }}</p>
+              <a href="{% url 'blog_detail' blog.pk %}" class="btn btn-sm btn-primary">Leer más</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>No hay blogs en esta categoría aún.</p>
+  {% endif %}
+{% endblock %}

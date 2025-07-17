@@ -20,10 +20,11 @@ class UserLoginForm(forms.Form):
 
 class UserUpdateForm(forms.ModelForm):
     email = forms.EmailField(required=True)
+    is_staff = forms.BooleanField(label="¿Este usuario es staff?", required=False)
 
     class Meta:
         model = User
-        fields = ["username", "email"]
+        fields = ["username", "email", "is_staff"]
 
 
 class AvatarForm(forms.ModelForm):

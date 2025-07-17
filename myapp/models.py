@@ -19,6 +19,9 @@ class Blog(models.Model):
     image = models.TextField(default="Sin-Imagen", help_text="URL de la imagen")
     date = models.DateField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
+    category = models.ForeignKey(
+        Category, on_delete=models.CASCADE, related_name="blogs"
+    )
 
     def __str__(self) -> str:
         return self.title
