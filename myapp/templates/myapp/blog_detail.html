@@ -2,16 +2,53 @@
 {% block title %} | {{ blog.title }}{% endblock %}
 
 {% block content %}
-  <div class="container mt-5">
-    <h2>{{ blog.title }}</h2>
-    <hr>
-    <p>{{ blog.body|linebreaks }}</p>
+<div class="container mt-5">
+  <h2>{{ blog.title }}</h2>
+  <hr>
 
-    <a href="#" onclick="history.back()" class="btn btn-secondary mt-3">Volver</a>
-
-    {% if user.is_staff%}
-      <a href="{% url "edit_blog" blog.id %}" class="btn btn-primary mt-3">Editar</a>
-      <a href="{% url "delete_blog" blog.id %}" class="btn btn-danger mt-3">Eliminar</a>
-    {% endif %}
+  <div class="row">
+    <div class="col-md-8">
+      <p>{{ blog.body|linebreaks }}</p>
+    </div>
+    <div class="col-md-4">
+      {% if blog.image %}
+        <img src="{{ blog.image }}" alt="{{ blog.title }}" class="img-fluid rounded-lg shadow-lg">
+      {% endif %}
+    </div>
   </div>
+
+  <a href="#" onclick="history.back()" class="btn btn-secondary mt-4">Volver</a>
+  {% if user.is_staff %}
+    <a href="{% url "edit_blog" blog.id %}" class="btn btn-primary mt-4">Editar</a>
+    <a href="{% url "delete_blog" blog.id %}" class="btn btn-danger mt-4">Eliminar</a>
+  {% endif %}
+
+  <hr class="my-5">
+
+  <h4 class="mb-3">Comentarios</h4>
+  {% if comments %}
+    <ul class="list-group mb-4">
+      {% for comment in comments %}
+        <li class="list-group-item">
+          <strong>{{ comment.user.username }}</strong> comentó:
+          <p class="mb-1">{{ comment.text|linebreaks }}</p>
+          <small class="text-muted">{{ comment.date|date:"d M Y H:i" }}</small>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="text-muted">Todavía no hay comentarios.</p>
+  {% endif %}
+
+  {% if user.is_authenticated %}
+    <h5>Agregar un comentario</h5>
+    <form method="POST" action="">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-success">Comentar</button>
+    </form>
+  {% else %}
+    <p><a href="{% url 'login' %}">Inicia sesión</a> para dejar un comentario.</p>
+  {% endif %}
+</div>
 {% endblock %}

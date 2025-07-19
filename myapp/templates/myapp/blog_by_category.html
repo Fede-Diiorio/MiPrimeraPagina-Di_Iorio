@@ -10,6 +10,7 @@
         <div class="col">
           <div class="card h-100 shadow-sm border-0">
             <div class="card-body">
+              <img src="{{blog.image}}" class="card-img-top" alt="{{blog.title}}">
               <h5 class="card-title">{{ blog.title }}</h5>
               <p class="card-text text-muted">{{ blog.created_at|date:"d M Y" }}</p>
               <p class="card-text">{{ blog.excerpt|truncatewords:20 }}</p>

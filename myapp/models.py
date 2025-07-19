@@ -32,4 +32,7 @@ class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="comments")
     blog = models.ForeignKey(Blog, on_delete=models.CASCADE, related_name="comments")
     text = models.TextField()
-    date = models.DateField(auto_now_add=True)
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return f"{self.blog.title} - {self.user.username} - {self.date}"
