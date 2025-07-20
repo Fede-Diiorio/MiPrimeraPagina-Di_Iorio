@@ -33,7 +33,16 @@
           <strong>{{ comment.user.username }}</strong> comentó:
           <p class="mb-1">{{ comment.text|linebreaks }}</p>
           <small class="text-muted">{{ comment.date|date:"d M Y H:i" }}</small>
+          
+          {% if comment.user == request.user %}
+            <div class="d-flex gap-2">
+              <a href="{% url 'edit_comment' comment.id %}" class="btn btn-primary mt-4">Editar</a> 
+              <a href="{% url 'delete_comment' comment.id %}" class="btn btn-danger mt-4">Eliminar</a>
+            </div>
+          {% endif %}
         </li>
+
+        
       {% endfor %}
     </ul>
   {% else %}

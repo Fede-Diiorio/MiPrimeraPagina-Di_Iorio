@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Editar Comentario</h2>
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button class="btn btn-primary mt-4" type="submit">Guardar cambios</button>
+    <a class="btn btn-secondary mt-4" href="{% url 'blog_detail' comment.blog.id %}">Cancelar</a>
+  </form>
+{% endblock %}

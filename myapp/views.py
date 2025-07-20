@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Category, Blog
+from .models import Category, Blog, Comment
 from .forms import CategoryForm, BlogForm, CommentForm
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django.contrib.auth.models import User
+from django.contrib import messages
+from django.http import HttpResponseForbidden
 
 
 def admin_required(view_func):
@@ -162,3 +164,41 @@ def add_comment(request, blog_id):
     else:
         form = CommentForm()
     return render(request, "myapp/add_comment.html", {"form": form})
+
+
+@login_required
+def edit_comment(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+
+    if comment.user != request.user:
+        return HttpResponseForbidden("No tienes permiso para editar este comentario.")
+    if request.method == "POST":
+        form = CommentForm(request.POST, instance=comment)
+        if form.is_valid():
+            form.save()
+            return redirect("blog_detail", blog_id=comment.blog.id)  # type: ignore
+    else:
+        form = CommentForm(instance=comment)
+
+    return render(
+        request,
+        "myapp/edit_comment.html",
+        {
+            "form": form,
+            "comment": comment,
+        },
+    )
+
+
+@login_required
+def delete_comment(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+
+    if comment.user != request.user:
+        return HttpResponseForbidden("No tienes permiso para eliminar este comentario.")
+    if request.method == "POST":
+        comment.delete()
+        messages.success(request, "El comentario ha sido eliminado correctamente.")
+        return redirect("blog_detail", blog_id=comment.blog.id)  # type: ignore
+
+    return render(request, "myapp/delete_comment.html", {"comment": comment})
