@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} | Editar Categoría{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2>Editar Categoría</h2>
+  <form method="POST" class="mt-4">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+    <a href="{% url 'category_list' %}" class="btn btn-secondary">Cancelar</a>
+  </form>
+</div>
+{% endblock %}

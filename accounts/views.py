@@ -1,9 +1,11 @@
 # accounts/views.py
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm, UserLoginForm, UserUpdateForm, AvatarForm
 from .models import Avatar
+from django.http import Http404
 
 
 def register_view(request):
@@ -69,4 +71,16 @@ def update_profile(request):
         request,
         "accounts/update_profile.html",
         {"user_form": user_form, "avatar_form": avatar_form},
+    )
+
+
+def user_profile_view(request, username):
+    try:
+        user = User.objects.get(username=username)
+        avatar = getattr(user, "avatar", None)
+    except User.DoesNotExist:
+        raise Http404("Usuario no encontrado")
+
+    return render(
+        request, "accounts/user_profile.html", {"profile_user": user, "avatar": avatar}
     )

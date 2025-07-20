@@ -3,6 +3,8 @@
 
 {% block content %}
 <div class="container mt-5">
+
+
   <h2>{{ blog.title }}</h2>
   <hr>
 
@@ -60,4 +62,5 @@
     <p><a href="{% url 'login' %}">Inicia sesión</a> para dejar un comentario.</p>
   {% endif %}
 </div>
+
 {% endblock %}

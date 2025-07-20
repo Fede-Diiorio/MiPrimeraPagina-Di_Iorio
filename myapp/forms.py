@@ -5,10 +5,11 @@ from .models import Category, Blog, Comment
 class CategoryForm(forms.ModelForm):
     class Meta:
         model = Category
-        fields = ["name", "slug"]
+        fields = ["name", "slug", "image"]
         widgets = {
             "name": forms.TextInput(attrs={"class": "form-control"}),
             "slug": forms.TextInput(attrs={"class": "form-control"}),
+            "image": forms.TextInput(attrs={"class": "form-control"}),
         }
 
 
