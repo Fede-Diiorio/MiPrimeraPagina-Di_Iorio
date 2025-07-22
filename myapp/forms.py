@@ -20,11 +20,9 @@ class BlogForm(forms.ModelForm):
         widgets = {
             "title": forms.TextInput(attrs={"class": "form-control"}),
             "body": forms.Textarea(attrs={"class": "form-control"}),
-            "image": forms.TextInput(attrs={"class": "form-control"}),
+            "image": forms.ClearableFileInput(attrs={"class": "form-control"}),
             "is_active": forms.CheckboxInput(attrs={"class": "form-check-input"}),
-            "category": forms.Select(
-                attrs={"class": "form-select"}
-            ),  # este es el desplegable
+            "category": forms.Select(attrs={"class": "form-select"}),
         }
 
 

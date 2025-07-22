@@ -5,17 +5,19 @@
   background-position: center;
   height: 20rem;
   position: relative;
+}
+.background-image .background-shadow {
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
-  align-items: center; }
-  .background-image .background-shadow {
-    height: 100%;
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.7); }
-  .background-image .text-center {
-    color: white; }
+  align-items: center;
+}
+.background-image .text-center {
+  color: white;
+}
 
 .card-img-top {
-  max-height: 12rem; }
-
-/*# sourceMappingURL=home.css.map */
+  max-height: 12rem;
+}

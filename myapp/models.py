@@ -17,7 +17,11 @@ class Blog(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="blogs")
     title = models.CharField(max_length=70)
     body = models.TextField()
-    image = models.TextField(default="Sin-Imagen", help_text="URL de la imagen")
+    image = models.ImageField(
+        upload_to="myapp/blog_images/",
+        default="myapp/blog_images/default.jpg",
+        help_text="Imagen del blog",
+    )
     date = models.DateField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
     category = models.ForeignKey(

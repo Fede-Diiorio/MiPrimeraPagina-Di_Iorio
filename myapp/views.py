@@ -5,6 +5,9 @@ from django.contrib.auth.decorators import user_passes_test, login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.http import HttpResponseForbidden
+from django.urls import reverse_lazy
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 
 
 def admin_required(view_func):
@@ -21,43 +24,41 @@ def about_me(request):
 
 
 # <--- CATEGORIAS --->
-def category_list(request):
-    categories = Category.objects.all()
-    return render(request, "myapp/categories.html", {"categories": categories})
+class AdminRequiredMixin(UserPassesTestMixin):
+    def test_func(self):
+        return self.request.user.is_staff  # type: ignore
+
+    def handle_no_permission(self):
+        return HttpResponseForbidden("No tienes permisos para acceder a esta vista.")
 
 
-@admin_required
-def category_create(request):
-    if request.method == "POST":
-        form = CategoryForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect("category_list")
-    else:
-        form = CategoryForm()
-    return render(request, "myapp/category_form.html", {"form": form})
+class CategoryListView(ListView):
+    model = Category
+    template_name = "myapp/categories.html"
+    context_object_name = "categories"
 
 
-@admin_required
-def edit_category(request, category_id):
-    category = get_object_or_404(Category, pk=category_id)
-    if request.method == "POST":
-        form = CategoryForm(request.POST, instance=category)
-        if form.is_valid():
-            form.save()
-            return redirect("category_list")
-    else:
-        form = CategoryForm(instance=category)
-    return render(request, "myapp/edit_category.html", {"form": form})
+class CategoryCreateView(AdminRequiredMixin, CreateView):
+    model = Category
+    form_class = CategoryForm
+    template_name = "myapp/category_form.html"
+    success_url = reverse_lazy("category_list")
 
 
-@admin_required
-def delete_category(request, category_id):
-    category = get_object_or_404(Category, pk=category_id)
-    if request.method == "POST":
-        category.delete()
-        return redirect("category_list")
-    return render(request, "myapp/delete_category.html", {"category": category})
+class CategoryUpdateView(AdminRequiredMixin, UpdateView):
+    model = Category
+    form_class = CategoryForm
+    template_name = "myapp/edit_category.html"
+    pk_url_kwarg = "category_id"
+    success_url = reverse_lazy("category_list")
+
+
+class CategoryDeleteView(AdminRequiredMixin, DeleteView):
+    model = Category
+    template_name = "myapp/delete_category.html"
+    context_object_name = "category"
+    pk_url_kwarg = "category_id"
+    success_url = reverse_lazy("category_list")
 
 
 # <--- BLOGS --->

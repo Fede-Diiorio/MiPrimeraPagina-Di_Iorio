@@ -205,4 +205,4 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
-insert_products.py
+insert_data.py
