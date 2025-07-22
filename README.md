@@ -1,11 +1,12 @@
-# Inventario y Gestión de Productos — Proyecto Django
+# Blog de Warhammer 40.000 — Proyecto Django
 
 Este es un proyecto de gestión básica de productos, clientes y órdenes desarrollado con Django. Permite:
+Este es un proyecto básico de blog, con categorias, comentarios y registro de usuarios. Permite:
 
-- Crear, listar y buscar **productos**
-- Gestionar **clientes**
-- Registrar **órdenes** asociadas a clientes
-- Buscar tanto **clientes** como **órdenes** y **productos** mediante formularios
+- Crear, listar y buscar **blogs**
+- Crear y manejar **usuarios**
+- Registrar **comentarios** asociadas a los usuarios en los **blogs**
+- Buscar **blogs** según la categoría en la que estén registrados
 
 ---
 

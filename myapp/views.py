@@ -7,7 +7,8 @@ from django.contrib import messages
 from django.http import HttpResponseForbidden
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
+from django.contrib.auth.mixins import UserPassesTestMixin
+from django.db.models import Q
 
 
 def admin_required(view_func):
@@ -63,8 +64,47 @@ class CategoryDeleteView(AdminRequiredMixin, DeleteView):
 
 # <--- BLOGS --->
 def blog_list(request):
-    blogs = Blog.objects.filter(is_active=True).order_by("-date")
-    return render(request, "myapp/blog_list.html", {"blogs": blogs})
+    query = request.GET.get("q", "")
+
+    blogs = Blog.objects.all().order_by("-date")
+
+    if query:
+        blogs = blogs.filter(
+            Q(title__icontains=query) | Q(category__name__icontains=query)
+        )
+
+    return render(
+        request,
+        "myapp/blog_list.html",
+        {
+            "blogs": blogs,
+        },
+    )
+
+
+def blog_search(request):
+    query = request.GET.get("q", "")
+    category_id = request.GET.get("category", "")
+
+    blogs = Blog.objects.all().order_by("-date")
+
+    if query:
+        blogs = blogs.filter(title__icontains=query)
+    if category_id:
+        blogs = blogs.filter(category__id=category_id)
+
+    categories = Category.objects.all()
+
+    return render(
+        request,
+        "myapp/blog_search_results.html",
+        {
+            "blogs": blogs,
+            "query": query,
+            "selected_category": category_id,
+            "categories": categories,
+        },
+    )
 
 
 def blog_detail(request, blog_id):
