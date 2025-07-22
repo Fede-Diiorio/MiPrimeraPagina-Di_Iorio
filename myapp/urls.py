@@ -23,4 +23,5 @@ urlpatterns = [
     path(
         "comment/<int:comment_id>/delete/", views.delete_comment, name="delete_comment"
     ),
+    path("about-me/", views.about_me, name="about_me"),
 ]

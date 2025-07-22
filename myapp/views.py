@@ -16,6 +16,10 @@ def home_view(request):
     return render(request, "myapp/home.html")
 
 
+def about_me(request):
+    return render(request, "myapp/about-me.html")
+
+
 # <--- CATEGORIAS --->
 def category_list(request):
     categories = Category.objects.all()

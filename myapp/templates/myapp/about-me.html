@@ -1,0 +1,115 @@
+{%  extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/about-me.css' %}">
+{% endblock extra_css %}
+
+{% block title %} | Sobre mí{% endblock title %}
+
+{% block content %}
+
+<section class="container mt-5">
+    <div class="dev-header">
+
+        <div class="dev-name-info">
+            <h1 class="dev-name">Federico <span>Di Iorio</span></h1>
+            <h2 class="dev-title">Desarrollador Web</h2>
+        </div>
+        
+        <img class="img-me" src="{% static "images/yo.jpg" %}" alt="Imagen del desarrollador">
+    </div>
+
+    <div class="division"></div>
+
+    <div class="profile">
+        <h2>Perfil</h2>
+
+        <div class="profile-info">
+            <div class="profile-box">
+
+                <p>
+                    Desarrollador web con enfoque full stack,
+                    con experiencia en tecnologías de
+                    frontend como HTML, CSS, SASS, JavaScript,
+                    React y TypeScript. En el backend, cuento
+                    con conocimientos en Node.js y Java, junto
+                    con manejo de bases de datos
+                    relacionales y no relacionales como MySQL
+                    y MongoDB. Familiarizado con control de
+                    versiones mediante Git y nociones básicas
+                    de Docker. Busco seguir creciendo
+                    profesionalmente en entornos dinámicos y
+                    orientados a la tecnología.
+                </p>
+
+                <div class="division"></div>
+
+                <div class="tecnology">
+                    <h3>Tecnologías</h3>
+
+                    <div class="tecnology-packs">
+                        <div class="tecnology-pack">
+                            <h4>Frontend</h4>
+                            <ul>
+                                <li>HTML</li>
+                                <li>CSS</li>
+                                <li>SASS</li>
+                                <li>JavaScript</li>
+                                <li>ReactJs</li>
+                                <li>TypeScript</li>
+                            </ul>
+                        </div>
+
+                        <div class="tecnology-pack">
+                            <h4>Backend</h4>
+                            <ul>
+                                <li>Node.js</li>
+                                <li>Java</li>
+                                <li>Python</li>
+                            </ul>
+                        </div>
+
+                        <div class="tecnology-pack">
+                            <h4>Base de datos</h4>
+                            <ul>
+                                <li>MongoDB</li>
+                                <li>MySQL</li>
+                            </ul>
+                        </div>
+
+                        <div class="tecnology-pack">
+                            <h4>Control de versiones</h4>
+                            <ul>
+                                <li>Git</li>
+                                <li>GitHub</li> 
+                                <li>Docker</li>
+                            </ul>
+                        </div>
+                    </div>
+                    {% comment %} tecnology-packs {% endcomment %}
+                </div>
+                {% comment %} profile-box {% endcomment %}
+            </div>
+            
+            <div class="image-pack">
+                <img src="{% static 'images/yo-marine.png' %}" alt="Imagen del desarrollador">
+
+                <div class="social-buttons">
+                    <a href="https://www.linkedin.com/in/federico-di-iorio-developer/" target="_blank">
+                        <img src="{% static 'images/linkedin-icon.png' %}" alt="LinkedIn" class="social-icon">
+                    </a>
+                    <a href="https://github.com/Fede-Diiorio" target="_blank">
+                        <img src="{% static 'images/github-icon.jpg' %}" alt="GitHub" class="social-icon">
+                    </a>
+                </div>
+            </div>
+            {% comment %} profile-info {% endcomment %}
+        </div>
+        
+    </div>
+    
+    
+</section>
+
+{% endblock content %}
