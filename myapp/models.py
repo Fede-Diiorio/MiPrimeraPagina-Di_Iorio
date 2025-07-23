@@ -19,7 +19,6 @@ class Blog(models.Model):
     body = models.TextField()
     image = models.ImageField(
         upload_to="myapp/blog_images/",
-        default="myapp/blog_images/default.jpg",
         help_text="Imagen del blog",
     )
     date = models.DateField(auto_now_add=True)

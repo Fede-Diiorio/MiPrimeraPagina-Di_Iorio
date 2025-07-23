@@ -161,7 +161,7 @@ def blogs_by_user(request, username):
 @admin_required
 def blog_create(request):
     if request.method == "POST":
-        form = BlogForm(request.POST)
+        form = BlogForm(request.POST, request.FILES)
         if form.is_valid():
             blog = form.save(commit=False)
             blog.user = request.user
