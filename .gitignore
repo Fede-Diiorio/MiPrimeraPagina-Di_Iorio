@@ -206,3 +206,7 @@ marimo/_static/
 marimo/_lsp/
 __marimo__/
 insert_data.py
+
+# Ignorar imágenes subidas por los usuarios
+media/accounts/avatars/*
+media/myapp/blog_images/*

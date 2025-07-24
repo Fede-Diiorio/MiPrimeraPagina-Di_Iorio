@@ -66,6 +66,12 @@ python manage.py runserver
 
 ---
 
+## 🎥 Demostración en video
+
+**Link:** [Aquí](https://www.youtube.com/watch?v=Cuo3teMiNtc&ab_channel=Diyo292)
+
+---
+
 ## 📄 Rutas importantes
 
 ### 📝 Blog
