@@ -10,7 +10,7 @@ urlpatterns = [
     path("blog/<int:blog_id>/edit/", views.edit_blog, name="edit_blog"),
     path("blog/<int:blog_id>/delete/", views.delete_blog, name="delete_blog"),
     path("blog/<str:username>/", views.blogs_by_user, name="blogs_by_user"),
-    path("blogs/search/", views.blog_search, name="blog_search"),
+    path("blog/search/", views.blog_search, name="blog_search"),
     path("category/<slug:slug>/", views.blog_by_category, name="blog_by_category"),
     path("categories/", views.CategoryListView.as_view(), name="category_list"),
     path(

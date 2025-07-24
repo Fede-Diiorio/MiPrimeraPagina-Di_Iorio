@@ -1,23 +1,23 @@
-# Blog de Warhammer 40.000 — Proyecto Django
+# Blog de Warhammer 40.000
 
-Este es un proyecto de gestión básica de productos, clientes y órdenes desarrollado con Django. Permite:
-Este es un proyecto básico de blog, con categorias, comentarios y registro de usuarios. Permite:
+Este es un proyecto de blog básico con categorías, comentarios y gestión de usuarios desarrollado con Django. Permite:
 
-- Crear, listar y buscar **blogs**
-- Crear y manejar **usuarios**
-- Registrar **comentarios** asociadas a los usuarios en los **blogs**
-- Buscar **blogs** según la categoría en la que estén registrados y por su nombre
+- Crear, listar, editar y eliminar **blogs**
+- Crear, listar, editar y eliminar **categorías**
+- Registrar y gestionar **usuarios**
+- Crear, editar o eliminar **comentarios** asociados a los **blogs**
+- Buscar **blogs** por categoría y título
 
 ---
 
 ## 📦 Funcionalidades
 
 - **Listado de blogs** con vista detallada por ID
-- **Listado de blogs** creados por el usuarioj
+- **Listado de blogs** creados por el usuario
 - **Búsqueda de blogs** por nombre o **categoría**
 - **Listado de categorias**
 - **Visualización de comentario** con información de usuario y hora en la vista del detalle del blog
-- Registro e identificación **usuarios** con vista detallada incluyendo creación de avatar
+- **Registro e inicio de sesión de usuarios**, con perfil y creación de avatar
 - Relación entre modelos: Cada blog está asociado a una categoría y a un usuario. Otros usuarios pueden crear comentarios asociados al blog.
 
 ---
@@ -25,9 +25,12 @@ Este es un proyecto básico de blog, con categorias, comentarios y registro de u
 ## 🛠️ Tecnologías
 
 - Python 3.x
-- Django
-- HTML + Bootstrap (para estilos simples en las vistas)
-- SQLite (por defecto)
+- Django 5.2.3 – Framework principal del backend
+- SQLite – Base de datos por defecto
+- Pillow – Manejo de imágenes (por ejemplo, para avatares y entradas de blog)
+- django-sass-processor – Compilación de SASS a CSS
+- Black – Formateador de código Python
+- Virtualenv – Entorno virtual para aislar dependencias
 
 ---
 
@@ -74,7 +77,7 @@ python manage.py runserver
 - `/blog/<id>/delete/` → Eliminar un blog
 - `/blog/<id>/comment/` → Agregar comentario a un blog
 - `/blog/<username>/` → Ver blogs por autor
-- `/blogs/search/` → Buscar blogs por título
+- `/blog/search/` → Buscar blogs por título
 
 ---
 
@@ -119,7 +122,7 @@ python manage.py runserver
 ```python
 name: CharField (máx 40)
 slug: SlugField (único, máx 40)
-image: TextField (URL de imagen, por defecto "Sin-Imagen")
+image: TextField (URL de imagen, valor por defecto: "Sin-Imagen")
 ```
 
 ---
@@ -130,7 +133,7 @@ image: TextField (URL de imagen, por defecto "Sin-Imagen")
 user: ForeignKey(User)
 title: CharField (máx 70)
 body: TextField
-image: ImageField (upload_to="myapp/blog_images/", default="myapp/blog_images/default.jpg")
+image: ImageField (upload_to="myapp/blog_images/")
 date: DateField (auto_now_add=True)
 is_active: BooleanField (default=True)
 category: ForeignKey(Category)
@@ -162,12 +165,15 @@ image: ImageField (upload_to="accounts/avatars")
 
 - Las búsquedas utilizan `Q()` de Django para permitir filtrar por múltiples campos.
 - Los formularios están hechos con HTML simple + clases Bootstrap para estilo básico.
-- El campo `created_at` se usa en órdenes para mostrar cuándo fue creada cada orden.
+- Los objetos se ordenan por fecha de creación usando campos como `date` o `date_created`.
 
 ---
 
 ## 🚀 Mejoras posibles a futuro
 
 - Soporte para paginación
+- Estilos personalizados en los formularios
+- Permitir la edición de blogs solo al creador
+- Medidas de seguridad adicionales para convertirse en administrador
 
 ---
